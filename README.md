@@ -163,3 +163,6 @@ while response is None:
         print("Successfully uploaded.")
         print("https://www.youtube.com/watch?v=" + response["id"])
 ```
+
+## Further reading
+https://developers.google.com/youtube/v3/guides/uploading_a_video
