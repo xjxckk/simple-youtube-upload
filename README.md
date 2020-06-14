@@ -88,11 +88,11 @@ request = youtube.insert(
 ```
 Call the insert method on the YouTube API instance.
 
-Part indicates the items that are included in your previous body request.
+part indicates the items that are included in your previous body request.
 
-Body is your request body.
+body is your request body.
 
-Media_body is your file and options (chunsize=-1 means it will upload your file in one continuos go).
+media_body is your file and options (chunksize=-1 means it will upload your file in one continuous go).
 
 #### Handling the upload
 ```python
@@ -103,23 +103,17 @@ while response is None:
     if "id" in response:
         print("Successfully uploaded.")
         print("https://www.youtube.com/watch?v=" + response["id"])
-    elif response is not None:
-        print("The upload failed with an unexpected response:", response)
 ```
+Sends your video in a chunk and waits for the response.
+
+If the video ID is in the response we know the video is succesfully uploaded and it will print the link to the video.
 
 ## Full code:
 ```python
 import random
 import time
-# import socket
 import pickle
-# import apiclient.http
-# import http.client
-# import httplib2
-# import googleapiclient.errors
-# from googleapiclient.errors import HttpError
 import google.oauth2.credentials
-# import google_auth_oauthlib.flow
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
@@ -132,7 +126,10 @@ if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
-        flow = InstalledAppFlow.from_client_secrets_file("client_secret.json", ["https://www.googleapis.com/auth/youtube.upload"])
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "client_secret.json",
+            ["https://www.googleapis.com/auth/youtube.upload"]
+            )
         creds = flow.run_console()
     with open("token", "wb") as token:
         pickle.dump(creds, token)
@@ -165,6 +162,4 @@ while response is None:
     if "id" in response:
         print("Successfully uploaded.")
         print("https://www.youtube.com/watch?v=" + response["id"])
-    elif response is not None:
-        print("The upload failed with an unexpected response:", response)
 ```
