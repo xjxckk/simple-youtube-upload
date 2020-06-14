@@ -152,7 +152,7 @@ body = {
 request = youtube.insert(
     part="snippet, status",
     body=body,
-    media_body=MediaFileUpload("temp/h81woe.mp4", resumable=True, chunksize=-1)
+    media_body=MediaFileUpload("sample.mp4", resumable=True, chunksize=-1)
 )
 
 response = None
