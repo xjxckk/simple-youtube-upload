@@ -7,7 +7,7 @@ A barebones script to upload to YouTube with Python
 ## Code breakdown
 Code explantion
 
-### Authentication
+#### Authentication
 
 ```python
 # Auth
@@ -18,18 +18,21 @@ if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
-        flow = InstalledAppFlow.from_client_secrets_file("client_secret.json", ["https://www.googleapis.com/auth/youtube.upload"])
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "client_secret.json",
+            ["https://www.googleapis.com/auth/youtube.upload"]
+            )
         creds = flow.run_console()
     with open("token", "wb") as token:
         pickle.dump(creds, token)
 ```
 
-### Connect to the API
+#### Connect to the API
 ```python
 youtube = build("youtube", "v3", credentials = creds).videos()
 ```
 
-### Set video options
+#### Set video options
 [Category list](https://gist.github.com/dgp/1b24bf2961521bd75d6c)
 ```python
 body = {
@@ -45,7 +48,7 @@ body = {
 }
 ```
 
-### Sending the first request
+#### Sending the first request
 ```python
 # Call the API"s videos.insert method to create and upload the video.
 request = youtube.insert(
@@ -55,7 +58,7 @@ request = youtube.insert(
 )
 ```
 
-### Handling the upload
+#### Handling the upload
 ```python
 response = None
 while response is None:
