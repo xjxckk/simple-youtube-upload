@@ -106,7 +106,7 @@ while response is None:
 ```
 Sends your video in a chunk and waits for the response.
 
-If the video ID is in the response we know the video is succesfully uploaded and it will print the link to the video.
+If the video ID is in the response the video is succesfully uploaded.
 
 ## Full code:
 ```python
