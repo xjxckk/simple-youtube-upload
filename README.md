@@ -6,66 +6,93 @@ A barebones script to upload to YouTube with Python
 Download the script
 
 * Go to the [Google console](https://console.developers.google.com/).
-* Create project.
+* Create a project (doesn't need to be on the same Google account as your YouTube channel)
 * Side menu: APIs & auth -> APIs
-* Top menu: Enabled API(s): Enable all Youtube APIs.
-* Side menu: APIs & auth -> Credentials.
+* Top menu: Enabled API(s): Enable all Youtube APIs
+* Side menu: APIs & auth -> Credentials
 * Create a Client ID: Add credentials -> OAuth 2.0 Client ID -> Other -> Name: youtube-upload -> Create -> OK
-* Download JSON: Under the section "OAuth 2.0 client IDs".
-* Save the file in the same directory as the script.
+* Download JSON: Under the section "OAuth 2.0 client IDs"
+* Save the file in the same directory as the script
 
 ## Code breakdown
-Code explanation
+This will guide you through the code to help you understand it.
 
 #### Authentication
 ```python
-# Auth
 with open("token", "rb") as token:
     creds = pickle.load(token)
-    # If there are no (valid) credentials available, let the user log in.
+```
+This opens/creates a file "token" which stores your authentication credentials.
+
+```python
 if not creds or not creds.valid:
+```
+Checks if the credentials are in the file and are valid.
+```python
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
+```
+If the credentials exist and are expired refresh them.
+```python
     else:
         flow = InstalledAppFlow.from_client_secrets_file(
             "client_secret.json",
             ["https://www.googleapis.com/auth/youtube.upload"]
             )
         creds = flow.run_console()
+```
+This will run when you run the script for your first time.
+
+Connect to authentication flow and run_console().
+
+This will give you a link to open in a browser and connect your YouTube account.
+
+It will give you an authentication code to enter.
+```python
     with open("token", "wb") as token:
         pickle.dump(creds, token)
 ```
+Saves your credentials to "token" file for next time.
 
 #### Connect to the API
 ```python
-youtube = build("youtube", "v3", credentials = creds).videos()
+youtube = build("youtube", "v3", credentials=creds).videos()
 ```
+Creates an instance with the YouTube v3 Videos API.
 
 #### Set video options
-[Category list](https://gist.github.com/dgp/1b24bf2961521bd75d6c)
 ```python
 body = {
     "snippet": {
         "title": "Test",
         "description": "Testing",
         "tags": None,
-        "categoryId": "20" # Gaming
+        "categoryId": "20"
     },
     "status": {
         "privacyStatus": "unlisted"
     }
 }
 ```
+Create a dictionary in the required format for the request.
+
+[Category ID list](https://gist.github.com/dgp/1b24bf2961521bd75d6c)
 
 #### Sending the first request
 ```python
-# Call the API"s videos.insert method to create and upload the video.
 request = youtube.insert(
     part="snippet, status",
     body=body,
-    media_body=MediaFileUpload("temp/h81woe.mp4", resumable=True, chunksize=-1)
+    media_body=MediaFileUpload("sample.mp4", chunksize=-1)
 )
 ```
+Call the insert method on the YouTube API instance.
+
+Part indicates the items that are included in your previous body request.
+
+Body is your request body.
+
+Media_body is your file and options (chunsize=-1 means it will upload your file in one continuos go).
 
 #### Handling the upload
 ```python
@@ -84,14 +111,11 @@ while response is None:
 ```python
 import random
 import time
-
 # import socket
-
 import pickle
 # import apiclient.http
 # import http.client
 # import httplib2
-
 # import googleapiclient.errors
 # from googleapiclient.errors import HttpError
 import google.oauth2.credentials
