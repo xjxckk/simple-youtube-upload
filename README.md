@@ -2,13 +2,22 @@
 A barebones script to upload to YouTube with Python
 
 ## Setup
-`pip install --upgrade google-api-python-client oauth2client pickle`
+    pip install --upgrade google-api-python-client oauth2client pickle
+Download the script
+
+* Go to the [Google console](https://console.developers.google.com/).
+* Create project.
+* Side menu: APIs & auth -> APIs
+* Top menu: Enabled API(s): Enable all Youtube APIs.
+* Side menu: APIs & auth -> Credentials.
+* Create a Client ID: Add credentials -> OAuth 2.0 Client ID -> Other -> Name: youtube-upload -> Create -> OK
+* Download JSON: Under the section "OAuth 2.0 client IDs".
+* Save the file in the same directory as the script.
 
 ## Code breakdown
-Code explantion
+Code explanation
 
 #### Authentication
-
 ```python
 # Auth
 with open("token", "rb") as token:
