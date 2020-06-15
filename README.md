@@ -6,10 +6,10 @@ A barebones script to upload to YouTube with Python
 Download the script
 
 * Go to the [Google console](https://console.developers.google.com/).
-* Create a project (doesn't need to be on the same Google account as your YouTube channel)
-* Side menu: APIs & auth -> APIs
+* Create a project (this doesn't need to be on the same Google account as your YouTube channel)
+* Side menu: APIs & Auth -> APIs
 * Top menu: Enabled API(s): Enable all Youtube APIs
-* Side menu: APIs & auth -> Credentials
+* Side menu: APIs & Auth -> Credentials
 * Create a Client ID: Add credentials -> OAuth 2.0 Client ID -> Other -> Name: youtube-upload -> Create -> OK
 * Download JSON: Under the section "OAuth 2.0 client IDs"
 * Save the file in the same directory as the script
