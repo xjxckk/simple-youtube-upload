@@ -3,7 +3,7 @@ A barebones script to upload to YouTube with Python
 
 ## Setup
     pip install --upgrade google-api-python-client oauth2client pickle
-Download the script
+Download the "yt.py" script.
 
 * Go to the [Google console](https://console.developers.google.com/).
 * Create a project (this doesn't need to be on the same Google account as your YouTube channel)
