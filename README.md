@@ -148,7 +148,7 @@ body = {
     }
 }
 
-# Call the API"s videos.insert method to create and upload the video.
+# Call the API's videos.insert method to create and upload the video.
 request = youtube.insert(
     part="snippet, status",
     body=body,
